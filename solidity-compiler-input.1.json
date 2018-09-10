@@ -1,0 +1,16 @@
+{
+    "language": "Solidity",
+    "sources": {
+        "Mortal": {
+            "content": "contract mortal  { function kill() { if (msg.sender == msg.sender) selfdestruct(msg.sender); } }"
+        }
+    },
+    "outputSelection": {
+        "*": {
+            "": [
+                "abi",
+                "evm.gasEstimates"
+            ]
+        }
+    }
+}

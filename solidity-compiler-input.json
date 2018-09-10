@@ -1,0 +1,22 @@
+{
+    "language": "Solidity",
+    "sources": {
+        "UserContractLookup.sol": {
+            "urls": [
+                "file://./contracts/UserContractLookup.sol"
+            ]
+        },
+        "UserDB.sol": {
+            "urls": [
+                "file://./contracts/Users/UserDB.sol"
+            ]
+        }
+    },
+    "outputSelection": {
+        "def": {
+            "UserContractLookup": [
+                "abi"
+            ]
+        }
+    }
+}
