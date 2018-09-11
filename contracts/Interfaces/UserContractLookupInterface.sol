@@ -12,26 +12,13 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details, at <http://www.gnu.org/licenses/>.
 //
-// @authors: slock.it GmbH, Simon Jentzsch, simon.jentzsch@slock.it
+// @authors: slock.it GmbH, Martin Kuechler, martin.kuechler@slock.it
 
-pragma solidity ^0.4.23;
+pragma solidity ^0.4.24;
 
-contract Owned {
-    /// @dev `owner` is the only address that can call a function with this
-    modifier onlyOwner { require (msg.sender == owner); _; }
+/// @title this interface defines functions for defining functions of the user-logic in order to call them in different contracts
+interface UserContractLookupInterface {
 
-    event LogChangeOwner(address _newOwner);
+    function userRegistry() external view returns (address);
 
-    address public owner;
-
-    /// @notice The Constructor assigns the message sender to be `owner`
-    constructor(address _initOwner) public { owner = _initOwner;}
-
-    /// @notice `owner` can step down and assign some other address to this role
-    /// @param _newOwner The address of the new owner
-    function changeOwner (address _newOwner) external onlyOwner {
-        require(_newOwner != address(0));
-        owner = _newOwner;
-        emit LogChangeOwner(_newOwner);
-    }
 }

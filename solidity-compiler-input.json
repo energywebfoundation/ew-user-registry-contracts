@@ -10,13 +10,24 @@
             "urls": [
                 "file://./contracts/Users/UserDB.sol"
             ]
+        },
+        "UserLogic.sol": {
+            "urls": [
+                "file://./contracts/Users/UserLogic.sol"
+            ]
         }
     },
-    "outputSelection": {
-        "def": {
-            "UserContractLookup": [
-                "abi"
-            ]
+    "settings": {
+        "remappings": [
+            ":ew-utils-general-contracts/=./solidity_modules/ew-utils-general-contracts/contracts/"
+        ],
+        "outputSelection": {
+            "*": {
+                "*": [
+                    "abi",
+                    "evm.bytecode.object"
+                ]
+            }
         }
     }
 }

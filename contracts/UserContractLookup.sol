@@ -14,13 +14,14 @@
 //
 // @authors: slock.it GmbH, Martin Kuechler, martin.kuechler@slock.it
 
-pragma solidity ^0.4.23;
+pragma solidity ^0.4.24;
 
-import "./Msc/Owned.sol";
-import "./Interfaces/Updatable.sol";
+import "ew-utils-general-contracts/Msc/Owned.sol";
+import "ew-utils-general-contracts/Interfaces/Updatable.sol";
+import "../contracts/Interfaces/UserContractLookupInterface.sol";
 
 /// @title Contract for storing the current logic-contracts-addresses for the certificate of origin
-contract UserContractLookup is Owned {
+contract UserContractLookup is Owned, UserContractLookupInterface {
 
     Updatable public userRegistry;
 
@@ -46,5 +47,9 @@ contract UserContractLookup is Owned {
         onlyOwner 
     {
         userRegistry = _userRegistry;
+    }
+
+    function userRegistry() external view returns (address){
+        return userRegistry;
     }
 }

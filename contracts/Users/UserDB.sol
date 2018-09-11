@@ -13,10 +13,10 @@
 // GNU General Public License for more details, at <http://www.gnu.org/licenses/>.
 //
 // @authors: slock.it GmbH, Martin Kuechler, martin.kuchler@slock.it
-pragma solidity ^0.4.23;
+pragma solidity ^0.4.24;
 pragma experimental ABIEncoderV2;
 
-import "../Msc/Owned.sol";
+import "ew-utils-general-contracts/Msc/Owned.sol";
 
 /// @title The database contract for the users, traders and admins of the certificate of origin
 /// @notice This contract only provides getter and setter methods that are only callable by the corresponging owner-contract
