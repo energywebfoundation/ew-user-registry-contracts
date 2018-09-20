@@ -24,15 +24,13 @@ contract RoleManagement is Owned{
     /// @notice all possible available roles
     /*
     no role:        0x0...000000
-    TopAdmin:       0x0...-----1
-    UserAdmin:      0x0...----1-
-    AssetAdmin:     0x0...---1--
-    AgreementAdmin: 0x0...--1---
-    AssetManager:   0x0...-1----
-    Tader:          0x0...1-----
+    UserAdmin:      0x0...----1
+    AssetAdmin:     0x0...---1-
+    AgreementAdmin: 0x0...--1--
+    AssetManager:   0x0...-1---
+    Tader:          0x0...1----
     */
     enum Role{
-        TopAdmin, 
         UserAdmin,
         AssetAdmin,
         AgreementAdmin, 
@@ -65,7 +63,7 @@ contract RoleManagement is Owned{
     }
 
     /// @notice constructor 
-    constructor(UserContractLookupInterface _userContractLookup) Owned(msg.sender) public {
+    constructor(UserContractLookupInterface _userContractLookup, address _owner) Owned(_owner) public {
         userContractLookup = _userContractLookup;
     }
 

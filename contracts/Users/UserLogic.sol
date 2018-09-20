@@ -39,7 +39,7 @@ contract UserLogic is RoleManagement, Updatable, RolesInterface {
 
     /// @notice constructor 
     /// @dev it will also call the RoleManagement-constructor 
-    constructor(UserContractLookupInterface _userContractLookup) RoleManagement(_userContractLookup) public {}
+    constructor(UserContractLookupInterface _userContractLookup) RoleManagement(_userContractLookup, _userContractLookup) public {}
 
     /// @notice function to deactive an use, only executable for user-admins
     /// @param _user the user that should be deactivated
@@ -49,8 +49,7 @@ contract UserLogic is RoleManagement, Updatable, RolesInterface {
         isInitialized
     {
         require(
-            !isRole(RoleManagement.Role.TopAdmin,_user)
-            && !isRole(RoleManagement.Role.UserAdmin,_user) 
+            !isRole(RoleManagement.Role.UserAdmin,_user) 
             && !isRole(RoleManagement.Role.AssetAdmin,_user)
             && !isRole(RoleManagement.Role.AgreementAdmin,_user)
             ,"user has an admin role at the moment"
@@ -61,10 +60,13 @@ contract UserLogic is RoleManagement, Updatable, RolesInterface {
 
     /// @notice Initialises the contract by binding it to a logic contract
     /// @param _database Sets the logic contract
-    function init(address _database) external onlyOwner {
+    function init(address _database, address _admin) 
+        external 
+        onlyOwner
+    {
         require(db == UserDB(0x0), "db already initialized");
         db = UserDB(_database);
-        db.setRoles(msg.sender, uint(RoleManagement.Role.TopAdmin));
+        db.setRoles(_admin, 2**uint(RoleManagement.Role.UserAdmin));
     }
 
     /// @notice funciton that can be called to create a new user in the storage-contract, only executable for user-admins!
@@ -86,7 +88,6 @@ contract UserLogic is RoleManagement, Updatable, RolesInterface {
     
     /// @notice function to set / edit the rights of an user / account, only executable for Top-Admins!
     /// @param _user user that rights will change
-    /// beware: if the only TopAdmin revokes its own rights noone will be able to get TopAdmin-rights back, making it impossible to set any new admin-rights
     /// @param _rights rights encoded as bitmask
     function setRoles(address _user, uint _rights) 
         external 

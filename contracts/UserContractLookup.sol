@@ -30,12 +30,13 @@ contract UserContractLookup is Owned, UserContractLookupInterface {
 
     /// @notice function to initialize the contracts, setting the needed contract-addresses
     /// @param _userRegistry user-registry logic contract address
-    function init(Updatable _userRegistry) 
+    function init(Updatable _userRegistry, address _db) 
         external
         onlyOwner
     {
-        require(_userRegistry != address(0) && userRegistry == address(0), "alreadny initialized");
+        require(_userRegistry != address(0) && userRegistry == address(0), "already initialized");
         userRegistry = _userRegistry;
+        userRegistry.init(_db, msg.sender);
     }
 
     /// @notice function to update one or more logic-contracts
@@ -46,6 +47,7 @@ contract UserContractLookup is Owned, UserContractLookupInterface {
         external
         onlyOwner 
     {
+        userRegistry.update(_userRegistry);
         userRegistry = _userRegistry;
     }
 
