@@ -35,6 +35,7 @@ contract UserContractLookup is Owned, UserContractLookupInterface {
         onlyOwner
     {
         require(_userRegistry != address(0) && userRegistry == address(0), "already initialized");
+        require(_db != 0, "_db cannot be 0");
         userRegistry = _userRegistry;
         userRegistry.init(_db, msg.sender);
     }
