@@ -40,11 +40,12 @@ describe('UserContractLookup', () => {
     const accountDeployment = web3.eth.accounts.privateKeyToAccount(privateKeyDeployment).address;
 
     it('should deploy the contracts', async () => {
+
         const contracts = await migrateUserRegistryContracts(web3);
 
-        userContractLookup = new UserContractLookup((web3 as any), contracts['solidity_modules/ew-user-registry-contracts/dist/UserContractLookup.json']);
-        userRegistry = new UserLogic((web3 as any), contracts['solidity_modules/ew-user-registry-contracts/dist/UserLogic.json']);
-        userDB = new UserDB((web3 as any), contracts['solidity_modules/ew-user-registry-contracts/dist/UserDB.json']);
+        userContractLookup = new UserContractLookup((web3 as any), contracts['dist/contracts/UserContractLookup.json']);
+        userRegistry = new UserLogic((web3 as any), contracts['dist/contracts/UserLogic.json']);
+        userDB = new UserDB((web3 as any), contracts['dist/contracts/UserDB.json']);
 
         let numberContracts = 0;
 

@@ -6,8 +6,9 @@
   "scripts": {
     "test": "npm run prepare-wrapping && npm run build-ts && mocha dist/js/test/",
     "build-ts": "rm -rf dist/js && node_modules/typescript/bin/tsc && cp src/types/*.d.ts dist/js/types/",
-    "prepare-wrapping": "rm -rf src/wrappedContracts && mkdir -p src/wrappedContracts && node wrapping.js",
-    "start-ganache": "ganache-cli -m 'chalk park staff buzz chair purchase wise oak receive avoid avoid home' -g 0 -l 80000000 -e 1000000 -a 20"
+    "prepare-wrapping": "rm -rf src/wrappedContracts && mkdir -p src/wrappedContracts && npm run compile && node wrapping.js",
+    "start-ganache": "ganache-cli -m 'chalk park staff buzz chair purchase wise oak receive avoid avoid home' -g 0 -l 80000000 -e 1000000 -a 20",
+    "compile": "spm compile"
   },
   "repository": {
     "type": "git",
@@ -16,7 +17,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "sloffle": "v1.3.1-beta01",
+    "sloffle": "v1.3.1-beta02",
     "web3": "^1.0.0-beta.36",
     "winston": "^3.0.0"
   },

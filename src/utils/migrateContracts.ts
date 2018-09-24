@@ -1,5 +1,6 @@
 import { Sloffle } from 'sloffle';
 import * as fs from 'fs';
+import * as path from 'path';
 import { UserContractLookup } from '../wrappedContracts/UserContractLookup';
 import { Web3Type } from '../types/web3';
 
@@ -14,19 +15,19 @@ export async function migrateUserRegistryContracts(web3: Web3Type): Promise<JSON
             configFile.develop.deployKey : '0x' + configFile.develop.deployKey;
 
         const userContractLookupWeb3 = await sloffle.deploy(
-            'dist/contracts/UserContractLookup.json',
+            path.resolve(__dirname, '../../contracts/UserContractLookup.json'),
             [],
             { privateKey: privateKeyDeployment },
         );
 
         const userLogicWeb3 = await sloffle.deploy(
-            'dist/contracts/UserLogic.json',
+            path.resolve(__dirname, '../../contracts/UserLogic.json'),
             [userContractLookupWeb3._address],
             { privateKey: privateKeyDeployment },
         );
 
         const userDbWeb3 = await sloffle.deploy(
-            'dist/contracts/UserDB.json',
+            path.resolve(__dirname, '../../contracts/UserDB.json'),
             [userLogicWeb3._address],
             { privateKey: privateKeyDeployment },
         );
