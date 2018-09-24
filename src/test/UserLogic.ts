@@ -41,9 +41,9 @@ describe('UserLogic', () => {
 
     it('should deploy the contracts', async () => {
         const contracts = await migrateUserRegistryContracts(web3);
-        userContractLookup = new UserContractLookup((web3 as any), contracts['dist/contracts/UserContractLookup.json']);
-        userLogic = new UserLogic((web3 as any), contracts['dist/contracts/UserLogic.json']);
-        userDB = new UserDB((web3 as any), contracts['dist/contracts/UserDB.json']);
+        userContractLookup = new UserContractLookup((web3 as any));
+        userLogic = new UserLogic((web3 as any));
+        userDB = new UserDB((web3 as any));
 
         let numberContracts = 0;
 
