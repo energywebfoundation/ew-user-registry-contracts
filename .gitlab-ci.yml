@@ -36,6 +36,21 @@ test-parity:
     - spm install
     - npm test 
 
+test-parity-POA:
+  tags:
+    - short-jobs
+  stage: test
+  services:
+    - name: docker.slock.it/build-images/parity:v1.11.8-tobalaba-poa
+      alias: parity
+  script:
+    - sh /prepare.sh
+    - cp ci.connection-config.json connection-config.json 
+    - npm install -g spm
+    - npm install 
+    - spm install
+    - npm test
+
 test-ganache:
   tags:
     - short-jobs
