@@ -4,7 +4,7 @@
   "description": "",
   "main": "dist/js/index.js",
   "scripts": {
-    "test": "npm run prepare-wrapping && npm run build-ts && mocha dist/js/test/",
+    "test": "npm run prepare-wrapping && npm run build-ts && mocha dist/js/test/ --timeout 60000",
     "build-ts": "rm -rf dist/js && node_modules/typescript/bin/tsc && cp src/types/*.d.ts dist/js/types/",
     "prepare-wrapping": "rm -rf src/wrappedContracts && mkdir -p src/wrappedContracts && npm run compile && node wrapping.js",
     "start-ganache": "ganache-cli -m 'chalk park staff buzz chair purchase wise oak receive avoid avoid home' -g 0 -l 80000000 -e 1000000 -a 20",
