@@ -19,6 +19,8 @@ pragma solidity ^0.4.24;
 /// @title this interface defines functions for defining functions of the user-logic in order to call them in different contracts
 interface UserContractLookupInterface {
 
+    /// @notice function that returns the address of the UserLogic.sol contracts registered in the UserContractLookup-contract
+    /// @return the address of the UserLogic-contract
     function userRegistry() external view returns (address);
 
 }

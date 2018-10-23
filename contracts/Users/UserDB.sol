@@ -22,9 +22,6 @@ import "ew-utils-general-contracts/Msc/Owned.sol";
 /// @notice This contract only provides getter and setter methods that are only callable by the corresponging owner-contract
 contract UserDB is Owned {
     
-    /// @notice The structure of an user / admin / trader
-    /// @dev as it's for now impossible to return a struct, there is a special get-function for this struct. 
-    /// @dev keep in mind to update that function aswell when changing the user-struct
     struct User {
         string organization;
         uint roles;
@@ -34,20 +31,28 @@ contract UserDB is Owned {
     /// @notice mapping for addresses to users
     mapping(address => User) private userList;  
 
+    /// @notice modifier to check whether a user is already set in the state
     modifier userExists(address _user) {
         require(userList[_user].active);
         _;
     }
 
     /// @notice The constructor of the UserDB
-    /// @dev the deployer of this contract will get full adminrights!
+    /// @param _logic the logic contract owning this database contract
     constructor(address _logic) Owned(_logic) public { }
 
     /// @notice function to change the name of an existing organization, can only be used when the user already exists
     /// @dev the onlyOwner-modifier is used, so that only the logic-contract is allowed to write into the storage
     /// @param _user ethereum-address of an user
     /// @param _organization new name of the organization
-    function setOrganization(address _user, string _organization) external onlyOwner userExists(_user){
+    function setOrganization(
+        address _user, 
+        string _organization
+    ) 
+        external 
+        onlyOwner 
+        userExists(_user)
+    {
         User storage u = userList[_user];
         u.organization = _organization;
     }
@@ -89,8 +94,8 @@ contract UserDB is Owned {
 
     /// @notice function to return all the data of an user
     /// @dev the onlyOwner-modifier is used, so that only the logic-contract is allowed to read directly from the contract
-    /// @param _user user 
-    /// @return returns firstName, surname, organization, street, number, zip, city, country, state, roles and the active-flag
+    /// @param _user account of the user to be returned
+    /// @return returns user-struct
     function getFullUser(address _user)
         onlyOwner
         external

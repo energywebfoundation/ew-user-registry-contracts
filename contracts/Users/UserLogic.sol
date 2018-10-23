@@ -28,14 +28,8 @@ import "../../contracts/Interfaces/UserContractLookupInterface.sol";
 /// @notice this contract will not directly store any data, instead it will store them into the userDB-contract
 contract UserLogic is RoleManagement, Updatable, RolesInterface {
 
-
     /// @notice db user-db for storing the contract
     UserDB public db;
-
-    modifier isInitialized {
-        require(address(db) != 0x0,"already initialized");
-        _;
-    }
 
     /// @notice constructor 
     /// @dev it will also call the RoleManagement-constructor 
@@ -46,7 +40,6 @@ contract UserLogic is RoleManagement, Updatable, RolesInterface {
     function deactivateUser(address _user)
         external
         onlyRole(RoleManagement.Role.UserAdmin)
-        isInitialized
     {
         require(
             !isRole(RoleManagement.Role.UserAdmin,_user) 
@@ -59,6 +52,7 @@ contract UserLogic is RoleManagement, Updatable, RolesInterface {
     }
 
     /// @notice Initialises the contract by binding it to a logic contract
+    /// @dev can only be called by the owner (UserContractLookup-Contract)
     /// @param _database Sets the logic contract
     function init(address _database, address _admin) 
         external 
@@ -79,7 +73,6 @@ contract UserLogic is RoleManagement, Updatable, RolesInterface {
     ) 
         external 
         onlyRole(RoleManagement.Role.UserAdmin) 
-        isInitialized
     {   
         bytes memory orgBytes = bytes(_organization);
         require(orgBytes.length>0, "empty string");
@@ -92,7 +85,6 @@ contract UserLogic is RoleManagement, Updatable, RolesInterface {
     function setRoles(address _user, uint _rights) 
         external 
         onlyRole(RoleManagement.Role.UserAdmin)
-        isInitialized
         userExists(_user)
     {
         db.setRoles(_user, _rights);
@@ -103,7 +95,6 @@ contract UserLogic is RoleManagement, Updatable, RolesInterface {
     function update(address _newLogic) 
         external
         onlyOwner
-        isInitialized
     {
         db.changeOwner(_newLogic);
     }

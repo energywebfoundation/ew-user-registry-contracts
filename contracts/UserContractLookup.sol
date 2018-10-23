@@ -30,6 +30,7 @@ contract UserContractLookup is Owned, UserContractLookupInterface {
 
     /// @notice function to initialize the contracts, setting the needed contract-addresses
     /// @param _userRegistry user-registry logic contract address
+    /// @param _db the database-contract of the user-registry-system
     function init(Updatable _userRegistry, address _db) 
         external
         onlyOwner
@@ -48,10 +49,14 @@ contract UserContractLookup is Owned, UserContractLookupInterface {
         external
         onlyOwner 
     {
+        require(address(_userRegistry)!= 0, "update: cannot set to 0");
         userRegistry.update(_userRegistry);
         userRegistry = _userRegistry;
     }
 
+    /// @notice returns the current userRegistryLogic that has access to the db
+    /// @dev this function will be called by external contracts
+    /// @return the user-Registry 
     function userRegistry() external view returns (address){
         return userRegistry;
     }
