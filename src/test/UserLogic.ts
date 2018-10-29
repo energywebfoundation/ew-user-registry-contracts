@@ -84,6 +84,8 @@ describe('UserLogic', () => {
             await userLogic.init(userLogic.web3Contract._address, userLogic.web3Contract._address, { privateKey: privateKeyDeployment });
         }
         catch (ex) {
+
+            assert.include(ex.message, 'msg.sender is not owner');
             failed = true;
         }
 
@@ -127,6 +129,7 @@ describe('UserLogic', () => {
         try {
             await userLogic.setRoles('0x1000000000000000000000000000000000000005', 1, { privateKey: privateKeyDeployment });
         } catch (ex) {
+            assert.include(ex.message, 'User does not exist');
             failed = true;
         }
         assert.isTrue(failed);
@@ -155,12 +158,13 @@ describe('UserLogic', () => {
             await userLogic.setRoles('0x1000000000000000000000000000000000000005', 1, { privateKey: '0x191c4b074672d9eda0ce576cfac79e44e320ffef5e3aadd55e000de57341d36c' });
         } catch (ex) {
             failed = true;
+            assert.include(ex.message, 'user does not have the required role');
         }
         assert.isTrue(failed);
 
     });
 
-    it('should fail trying to set roles as non user-Admin', async () => {
+    it('should set roles as non user-Admin', async () => {
 
         await userLogic.setRoles('0x1000000000000000000000000000000000000005', 1, { privateKey: privateKeyDeployment });
 

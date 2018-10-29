@@ -86,6 +86,7 @@ describe('UserContractLookup', () => {
             await userContractLookup.init(userRegistry.web3Contract._address, userRegistry.web3Contract._address, { privateKey: privateKeyDeployment });
         }
         catch (ex) {
+            assert.include(ex.message, 'already initialized');
             failed = true;
         }
 
@@ -100,6 +101,7 @@ describe('UserContractLookup', () => {
             await userContractLookup.update('0x1000000000000000000000000000000000000005', { privateKey: '0x191c4b074672d9eda0ce576cfac79e44e320ffef5e3aadd55e000de57341d36c' });
         }
         catch (ex) {
+            assert.include(ex.message, 'msg.sender is not owner');
             failed = true;
         }
 
@@ -123,6 +125,8 @@ describe('UserContractLookup', () => {
         }
         catch (ex) {
             failed = true;
+            assert.include(ex.message, 'msg.sender is not owner');
+
         }
 
         assert.isTrue(failed);
