@@ -16,8 +16,8 @@
 
 pragma solidity ^0.4.24;
 
-import "ew-utils-general-contracts/Msc/Owned.sol";
-import "ew-utils-general-contracts/Interfaces/Updatable.sol";
+import "ew-utils-general-contracts/contracts/Msc/Owned.sol";
+import "ew-utils-general-contracts/contracts/Interfaces/Updatable.sol";
 import "../contracts/Interfaces/UserContractLookupInterface.sol";
 
 /// @title Contract for storing the current logic-contracts-addresses for the certificate of origin

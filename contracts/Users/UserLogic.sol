@@ -19,7 +19,7 @@ pragma experimental ABIEncoderV2;
 
 import "../../contracts/Users/UserDB.sol";
 import "../../contracts/Users/RoleManagement.sol";
-import "ew-utils-general-contracts/Interfaces/Updatable.sol";
+import "ew-utils-general-contracts/contracts/Interfaces/Updatable.sol";
 import "../../contracts/Interfaces/RolesInterface.sol";
 import "../../contracts/Interfaces/UserContractLookupInterface.sol";
 

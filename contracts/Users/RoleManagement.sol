@@ -16,7 +16,7 @@
 pragma solidity ^0.4.24;
 import "../../contracts/Interfaces/UserContractLookupInterface.sol";
 import "../../contracts/Interfaces/RolesInterface.sol";
-import "ew-utils-general-contracts/Msc/Owned.sol";
+import "ew-utils-general-contracts/contracts/Msc/Owned.sol";
 
 /// @notice contract for managing the rights and roles
 contract RoleManagement is Owned{
