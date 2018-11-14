@@ -14,7 +14,7 @@
 //
 // @authors: slock.it GmbH, Martin Kuechler, martin.kuchler@slock.it
 
-pragma solidity ^0.4.24;
+pragma solidity ^0.5.0;
 
 /// @title this interface defines functions for defining functions of the user-logic in order to call them in different contracts
 interface RolesInterface {

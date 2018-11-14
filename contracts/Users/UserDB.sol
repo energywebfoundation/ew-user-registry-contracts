@@ -13,7 +13,7 @@
 // GNU General Public License for more details, at <http://www.gnu.org/licenses/>.
 //
 // @authors: slock.it GmbH, Martin Kuechler, martin.kuchler@slock.it
-pragma solidity ^0.4.24;
+pragma solidity ^0.5.0;
 pragma experimental ABIEncoderV2;
 
 import "ew-utils-general-contracts/contracts/Msc/Owned.sol";
@@ -47,7 +47,7 @@ contract UserDB is Owned {
     /// @param _organization new name of the organization
     function setOrganization(
         address _user, 
-        string _organization
+        string calldata _organization
     ) 
         external 
         onlyOwner 
@@ -64,7 +64,7 @@ contract UserDB is Owned {
     /// @param _organization organization the user is representing
     function setUser(
         address _user, 
-        string _organization
+        string calldata _organization
     ) 
         external 
         onlyOwner 
@@ -101,7 +101,7 @@ contract UserDB is Owned {
         external
         view 
         returns (
-          User
+          User memory user
         )
     {
         return userList[_user];
