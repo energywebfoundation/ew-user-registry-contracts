@@ -13,7 +13,7 @@
 // GNU General Public License for more details, at <http://www.gnu.org/licenses/>.
 //
 // @authors: slock.it GmbH, Martin Kuechler, martin.kuechler@slock.it
-pragma solidity ^0.4.24;
+pragma solidity ^0.5.0;
 import "../../contracts/Interfaces/UserContractLookupInterface.sol";
 import "../../contracts/Interfaces/RolesInterface.sol";
 import "ew-utils-general-contracts/contracts/Msc/Owned.sol";

@@ -14,7 +14,7 @@
 //
 // @authors: slock.it GmbH, Martin Kuechler, martin.kuechler@slock.it
 
-pragma solidity ^0.4.24;
+pragma solidity ^0.5.0;
 
 import "ew-utils-general-contracts/contracts/Msc/Owned.sol";
 import "ew-utils-general-contracts/contracts/Interfaces/Updatable.sol";
@@ -23,7 +23,7 @@ import "../contracts/Interfaces/UserContractLookupInterface.sol";
 /// @title Contract for storing the current logic-contracts-addresses for the certificate of origin
 contract UserContractLookup is Owned, UserContractLookupInterface {
 
-    Updatable public userRegistry;
+    Updatable private userRegistryContract;
 
     /// @notice The constructor 
     constructor() Owned(msg.sender) public{ } 
@@ -35,10 +35,10 @@ contract UserContractLookup is Owned, UserContractLookupInterface {
         external
         onlyOwner
     {
-        require(_userRegistry != address(0) && userRegistry == address(0), "already initialized");
-        require(_db != 0, "_db cannot be 0");
-        userRegistry = _userRegistry;
-        userRegistry.init(_db, msg.sender);
+        require(address(_userRegistry) != address(0) && address(userRegistryContract) == address(0), "already initialized");
+        require(address(_db) != address(0x0), "_db cannot be 0");
+        userRegistryContract = _userRegistry;
+        userRegistryContract.init(_db, msg.sender);
     }
 
     /// @notice function to update one or more logic-contracts
@@ -49,15 +49,15 @@ contract UserContractLookup is Owned, UserContractLookupInterface {
         external
         onlyOwner 
     {
-        require(address(_userRegistry)!= 0, "update: cannot set to 0");
-        userRegistry.update(_userRegistry);
-        userRegistry = _userRegistry;
+        require(address(_userRegistry)!= address(0x0), "update: cannot set to 0");
+        userRegistryContract.update(address(_userRegistry));
+        userRegistryContract = _userRegistry;
     }
 
     /// @notice returns the current userRegistryLogic that has access to the db
     /// @dev this function will be called by external contracts
     /// @return the user-Registry 
     function userRegistry() external view returns (address){
-        return userRegistry;
+        return address(userRegistryContract);
     }
 }

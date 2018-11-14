@@ -14,7 +14,7 @@
 //
 // @authors: slock.it GmbH, Martin Kuechler, martin.kuechler@slock.it
 
-pragma solidity ^0.4.24;
+pragma solidity ^0.5.0;
 pragma experimental ABIEncoderV2;
 
 import "../../contracts/Users/UserDB.sol";
@@ -33,7 +33,7 @@ contract UserLogic is RoleManagement, Updatable, RolesInterface {
 
     /// @notice constructor 
     /// @dev it will also call the RoleManagement-constructor 
-    constructor(UserContractLookupInterface _userContractLookup) RoleManagement(_userContractLookup, _userContractLookup) public {}
+    constructor(UserContractLookupInterface _userContractLookup) RoleManagement(_userContractLookup, address(_userContractLookup)) public {}
 
     /// @notice function to deactive an use, only executable for user-admins
     /// @param _user the user that should be deactivated
@@ -58,7 +58,7 @@ contract UserLogic is RoleManagement, Updatable, RolesInterface {
         external 
         onlyOwner
     {
-        require(db == UserDB(0x0), "db already initialized");
+        require(address(db) == address(0x0), "db already initialized");
         db = UserDB(_database);
         db.setRoles(_admin, 2**uint(RoleManagement.Role.UserAdmin));
     }
@@ -69,7 +69,7 @@ contract UserLogic is RoleManagement, Updatable, RolesInterface {
     /// @param _organization organization the user is representing
     function setUser(        
         address _user, 
-        string _organization
+        string calldata _organization
     ) 
         external 
         onlyRole(RoleManagement.Role.UserAdmin) 
@@ -117,7 +117,7 @@ contract UserLogic is RoleManagement, Updatable, RolesInterface {
         external
         view 
         returns (
-            string _organization,
+            string memory _organization,
             uint _roles,
             bool _active
         )
