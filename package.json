@@ -32,7 +32,6 @@
     "chai": "^4.1.2",
     "ganache-cli": "^6.1.8",
     "mocha": "^5.2.0",
-    "solc": "^0.4.23",
     "tslint": "^5.11.0",
     "typescript": "^2.9.2",
     "typescript-json-schema": "^0.31.0",
