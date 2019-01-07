@@ -40,16 +40,23 @@ describe('UserLogic', () => {
     const accountDeployment = web3.eth.accounts.privateKeyToAccount(privateKeyDeployment).address;
 
     it('should deploy the contracts', async () => {
+
         const contracts = await migrateUserRegistryContracts(web3);
-        userContractLookup = new UserContractLookup((web3 as any));
-        userLogic = new UserLogic((web3 as any));
-        userDB = new UserDB((web3 as any));
 
         let numberContracts = 0;
 
         Object.keys(contracts).forEach(async (key) => {
             numberContracts += 1;
 
+            if (key.includes('UserContractLookup')) {
+                userContractLookup = new UserContractLookup((web3 as any), contracts[key]);
+            }
+            if (key.includes('UserLogic')) {
+                userLogic = new UserLogic((web3 as any), contracts[key]);
+            }
+            if (key.includes('UserDB')) {
+                userDB = new UserDB((web3 as any), contracts[key]);
+            }
             const deployedBytecode = await web3.eth.getCode(contracts[key]);
             assert.isTrue(deployedBytecode.length > 0);
 
@@ -63,7 +70,6 @@ describe('UserLogic', () => {
         assert.equal(numberContracts, 3);
 
     });
-
     it('should have the right owner', async () => {
 
         assert.equal(await userLogic.owner(), userContractLookup.web3Contract._address);

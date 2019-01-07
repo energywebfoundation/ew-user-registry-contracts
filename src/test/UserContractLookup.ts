@@ -43,15 +43,20 @@ describe('UserContractLookup', () => {
 
         const contracts = await migrateUserRegistryContracts(web3);
 
-        userContractLookup = new UserContractLookup((web3 as any));
-        userRegistry = new UserLogic((web3 as any));
-        userDB = new UserDB((web3 as any));
-
         let numberContracts = 0;
 
         Object.keys(contracts).forEach(async (key) => {
             numberContracts += 1;
 
+            if (key.includes('UserContractLookup')) {
+                userContractLookup = new UserContractLookup((web3 as any), contracts[key]);
+            }
+            if (key.includes('UserLogic')) {
+                userRegistry = new UserLogic((web3 as any), contracts[key]);
+            }
+            if (key.includes('UserDB')) {
+                userDB = new UserDB((web3 as any), contracts[key]);
+            }
             const deployedBytecode = await web3.eth.getCode(contracts[key]);
             assert.isTrue(deployedBytecode.length > 0);
 
