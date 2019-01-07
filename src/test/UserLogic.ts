@@ -41,7 +41,7 @@ describe('UserLogic', () => {
 
     it('should deploy the contracts', async () => {
 
-        const contracts = await migrateUserRegistryContracts(web3);
+        const contracts = await migrateUserRegistryContracts(web3, privateKeyDeployment);
 
         let numberContracts = 0;
 

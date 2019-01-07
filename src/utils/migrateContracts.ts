@@ -1,16 +1,16 @@
-import * as fs from 'fs';
 import * as path from 'path';
 import { UserContractLookup } from '../wrappedContracts/UserContractLookup';
 import { Web3Type } from '../types/web3';
 import { UserContractLookupJSON, UserLogicJSON, UserDBJSON } from '..';
 import { deploy } from 'ew-deployment';
-export async function migrateUserRegistryContracts(web3: Web3Type): Promise<JSON> {
+
+export async function migrateUserRegistryContracts(web3: Web3Type, deployKey: string): Promise<JSON> {
     return new Promise<any>(async (resolve, reject) => {
 
-        const configFile = JSON.parse(fs.readFileSync('connection-config.json', 'utf8'));
+        // const configFile = JSON.parse(fs.readFileSync('connection-config.json', 'utf8'));
 
-        const privateKeyDeployment = configFile.develop.deployKey.startsWith('0x') ?
-            configFile.develop.deployKey : '0x' + configFile.develop.deployKey;
+        const privateKeyDeployment = deployKey.startsWith('0x') ?
+            deployKey : '0x' + deployKey;
 
         const userContractLookupAddress = (await deploy(
             web3,

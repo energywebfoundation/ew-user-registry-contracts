@@ -26,6 +26,7 @@ import { UserDB } from '../wrappedContracts/UserDB';
 describe('UserContractLookup', () => {
 
     const configFile = JSON.parse(fs.readFileSync(process.cwd() + '/connection-config.json', 'utf8'));
+    // const configFile = JSON.parse(fs.readFileSync('connection-config.json', 'utf8'));
 
     const Web3 = require('web3');
     const web3: Web3Type = new Web3(configFile.develop.web3);
@@ -41,7 +42,7 @@ describe('UserContractLookup', () => {
 
     it('should deploy the contracts', async () => {
 
-        const contracts = await migrateUserRegistryContracts(web3);
+        const contracts = await migrateUserRegistryContracts(web3, privateKeyDeployment);
 
         let numberContracts = 0;
 
