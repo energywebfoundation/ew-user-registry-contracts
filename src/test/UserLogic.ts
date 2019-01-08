@@ -22,6 +22,7 @@ import { migrateUserRegistryContracts } from '../utils/migrateContracts';
 import { UserContractLookup } from '../wrappedContracts/UserContractLookup';
 import { UserLogic } from '../wrappedContracts/UserLogic';
 import { UserDB } from '../wrappedContracts/UserDB';
+import { UserContractLookupJSON, UserLogicJSON, UserDBJSON } from '..';
 
 describe('UserLogic', () => {
 
@@ -48,21 +49,24 @@ describe('UserLogic', () => {
         Object.keys(contracts).forEach(async (key) => {
             numberContracts += 1;
 
+            let tempBytecode;
             if (key.includes('UserContractLookup')) {
                 userContractLookup = new UserContractLookup((web3 as any), contracts[key]);
+                tempBytecode = '0x' + (UserContractLookupJSON as any).deployedBytecode;
             }
             if (key.includes('UserLogic')) {
                 userLogic = new UserLogic((web3 as any), contracts[key]);
+                tempBytecode = '0x' + (UserLogicJSON as any).deployedBytecode;
+
             }
             if (key.includes('UserDB')) {
                 userDB = new UserDB((web3 as any), contracts[key]);
+                tempBytecode = '0x' + (UserDBJSON as any).deployedBytecode;
+
             }
             const deployedBytecode = await web3.eth.getCode(contracts[key]);
             assert.isTrue(deployedBytecode.length > 0);
 
-            const contractInfo = JSON.parse(fs.readFileSync(key, 'utf8'));
-
-            const tempBytecode = '0x' + contractInfo.deployedBytecode;
             assert.equal(deployedBytecode, tempBytecode);
 
         });
@@ -70,6 +74,7 @@ describe('UserLogic', () => {
         assert.equal(numberContracts, 3);
 
     });
+
     it('should have the right owner', async () => {
 
         assert.equal(await userLogic.owner(), userContractLookup.web3Contract._address);
