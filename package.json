@@ -2,7 +2,7 @@
   "name": "ew-user-registry-contracts",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/js/index.js",
+  "main": "dist/js/src/index.js",
   "scripts": {
     "test": "npm run prepare-wrapping && npm run build-ts && mocha dist/js/src/test/ --timeout 60000",
     "build-ts": "rm -rf dist/js && node_modules/typescript/bin/tsc",
