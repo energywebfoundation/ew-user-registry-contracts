@@ -3,7 +3,7 @@ const { exec } = require('child_process');
 
 const main = async () => {
 
-    await Sloffle.wrapping("dist/contracts", "src/wrappedContracts")
+    await Sloffle.wrapping("contract-build", "src/wrappedContracts")
 
 }
 

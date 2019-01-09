@@ -17,7 +17,7 @@
 import { assert } from 'chai';
 import * as fs from 'fs';
 import 'mocha';
-import { Web3Type } from '../types/web3';
+import Web3 = require('web3');
 import { migrateUserRegistryContracts } from '../utils/migrateContracts';
 import { UserContractLookup } from '../wrappedContracts/UserContractLookup';
 import { UserLogic } from '../wrappedContracts/UserLogic';
@@ -28,8 +28,7 @@ describe('UserLogic', () => {
 
     const configFile = JSON.parse(fs.readFileSync(process.cwd() + '/connection-config.json', 'utf8'));
 
-    const Web3 = require('web3');
-    const web3: Web3Type = new Web3(configFile.develop.web3);
+    const web3: Web3 = new Web3(configFile.develop.web3);
 
     let userContractLookup: UserContractLookup;
     let userLogic: UserLogic;

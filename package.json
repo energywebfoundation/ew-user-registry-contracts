@@ -4,9 +4,9 @@
   "description": "",
   "main": "dist/js/index.js",
   "scripts": {
-    "test": "npm run prepare-wrapping && npm run build-ts && mocha dist/js/test/ --timeout 60000",
-    "build-ts": "rm -rf dist/js && node_modules/typescript/bin/tsc && cp src/types/*.d.ts dist/js/types/",
-    "prepare-wrapping": "rm -rf src/wrappedContracts && mkdir -p src/wrappedContracts && npm run compile && node wrapping.js",
+    "test": "npm run prepare-wrapping && npm run build-ts && mocha dist/js/src/test/ --timeout 60000",
+    "build-ts": "rm -rf dist/js && node_modules/typescript/bin/tsc",
+    "prepare-wrapping": "rm -rf src/wrappedContracts && mkdir -p src/wrappedContracts && npm run compile && cp -R contract-build dist/ && node wrapping.js ",
     "start-ganache": "ganache-cli -m 'chalk park staff buzz chair purchase wise oak receive avoid avoid home' -g 0 -l 80000000 -e 1000000 -a 20",
     "compile": "spm compile",
     "parity-docker": "docker pull docker.slock.it/build-images/parity:v1.11.8-tobalaba && docker run --name 'parityDocker' -p 8180:8180 -p 8545:8545 -p 8546:8546 -p 8090:8091 docker.slock.it/build-images/parity:v1.11.8-tobalaba",
