@@ -1,6 +1,9 @@
 import { UserContractLookup } from '../wrappedContracts/UserContractLookup';
 import Web3 = require('web3');
-import { UserContractLookupJSON, UserLogicJSON, UserDBJSON } from '..';
+import UserDBJSON from '../../contract-build/UserDB.json';
+import UserLogicJSON from '../../contract-build/UserLogic.json';
+import { UserContractLookupJSON } from '..';
+
 import { deploy } from 'ew-deployment';
 
 export async function migrateUserRegistryContracts(web3: Web3, deployKey: string): Promise<JSON> {
@@ -13,17 +16,17 @@ export async function migrateUserRegistryContracts(web3: Web3, deployKey: string
 
         const userContractLookupAddress = (await deploy(
             web3,
-            (UserContractLookupJSON as any).bytecode,
+            UserContractLookupJSON.bytecode,
             { privateKey: privateKeyDeployment })).contractAddress;
 
         const userLogicAddress = (await deploy(
             web3,
-            (UserLogicJSON as any).bytecode + web3.eth.abi.encodeParameter('address', userContractLookupAddress).substr(2),
+            UserLogicJSON.bytecode + web3.eth.abi.encodeParameter('address', userContractLookupAddress).substr(2),
             { privateKey: privateKeyDeployment })).contractAddress;
 
         const userDBAddress = (await deploy(
             web3,
-            (UserDBJSON as any).bytecode + web3.eth.abi.encodeParameter('address', userLogicAddress).substr(2),
+            UserDBJSON.bytecode + web3.eth.abi.encodeParameter('address', userLogicAddress).substr(2),
             { privateKey: privateKeyDeployment })).contractAddress;
 
         const userContractLookup = new UserContractLookup((web3 as any), userContractLookupAddress);
