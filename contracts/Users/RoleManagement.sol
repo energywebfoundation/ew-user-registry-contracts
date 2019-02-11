@@ -1,6 +1,6 @@
 // Copyright 2018 Energy Web Foundation
 // This file is part of the Origin Application brought to you by the Energy Web Foundation,
-// a global non-profit organization focused on accelerating blockchain technology across the energy sector, 
+// a global non-profit organization focused on accelerating blockchain technology across the energy sector,
 // incorporated in Zug, Switzerland.
 //
 // The Origin Application is free software: you can redistribute it and/or modify
@@ -12,7 +12,8 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details, at <http://www.gnu.org/licenses/>.
 //
-// @authors: slock.it GmbH, Martin Kuechler, martin.kuechler@slock.it
+// @authors: slock.it GmbH; Martin Kuechler, martin.kuchler@slock.it; Heiko Burkhardt, heiko.burkhardt@slock.it
+
 pragma solidity ^0.5.0;
 import "../../contracts/Interfaces/UserContractLookupInterface.sol";
 import "../../contracts/Interfaces/RolesInterface.sol";
@@ -35,19 +36,19 @@ contract RoleManagement is Owned{
         UserAdmin,
         AssetAdmin,
         AgreementAdmin, //TODO: remove agreement-Admin
-        AssetManager,  
-        Trader, 
+        AssetManager,
+        Trader,
         Matcher
-    } 
+    }
 
     ///@param contract-lookup for users
     UserContractLookupInterface public userContractLookup;
 
     /// @notice modifier for checking if an user is allowed to execute the intended action
     /// @param _role one of the roles of the enum Role
-    modifier onlyRole (RoleManagement.Role _role) { 
-        require (isRole(_role, msg.sender),"user does not have the required role"); 
-        _; 
+    modifier onlyRole (RoleManagement.Role _role) {
+        require (isRole(_role, msg.sender),"user does not have the required role");
+        _;
     }
 
     /// @notice modifier for checking that only a certain account can do an action
@@ -68,12 +69,12 @@ contract RoleManagement is Owned{
     /// @param _role one of the roles of the enum Role
     /// @param _user the address of the user to be checked for the role
     modifier userHasRole(RoleManagement.Role _role, address _user){
-        require (isRole(_role, _user),"user does not have the required role"); 
-        _; 
+        require (isRole(_role, _user),"user does not have the required role");
+        _;
     }
 
-    /// @notice constructor 
-    /// @param _userContractLookup contract-lookup instance 
+    /// @notice constructor
+    /// @param _userContractLookup contract-lookup instance
     /// @param _owner the owner of the contract
     constructor(UserContractLookupInterface _userContractLookup, address _owner) Owned(_owner) public {
         userContractLookup = _userContractLookup;
@@ -83,11 +84,11 @@ contract RoleManagement is Owned{
     /// @param _role role of a user
     /// @param _caller the user trying to call the action
     /// @return whether the user has the corresponding rights for the intended action
-    function isRole(RoleManagement.Role _role, address _caller) public view returns (bool) { 
+    function isRole(RoleManagement.Role _role, address _caller) public view returns (bool) {
 
         /// @dev reading the rights for the user from the userDB-contract
         uint rights = RolesInterface(userContractLookup.userRegistry()).getRolesRights(_caller);
-        /// @dev converting the used enum to the corresponding bitmask 
+        /// @dev converting the used enum to the corresponding bitmask
         uint role = uint(2) ** uint(_role);
         /// @dev comparing rights and roles, if the result is not 0 the user has the right (bitwise comparison)
         /// we also don't have to check for a potential overflow here, because the used enum will prevent using roles that do not exist

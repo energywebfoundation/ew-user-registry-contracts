@@ -1,6 +1,6 @@
 // Copyright 2018 Energy Web Foundation
 // This file is part of the Origin Application brought to you by the Energy Web Foundation,
-// a global non-profit organization focused on accelerating blockchain technology across the energy sector, 
+// a global non-profit organization focused on accelerating blockchain technology across the energy sector,
 // incorporated in Zug, Switzerland.
 //
 // The Origin Application is free software: you can redistribute it and/or modify
@@ -12,7 +12,8 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details, at <http://www.gnu.org/licenses/>.
 //
-// @authors: slock.it GmbH, Martin Kuechler, martin.kuchler@slock.it
+// @authors: slock.it GmbH; Martin Kuechler, martin.kuchler@slock.it; Heiko Burkhardt, heiko.burkhardt@slock.it
+
 pragma solidity ^0.5.0;
 pragma experimental ABIEncoderV2;
 
@@ -21,7 +22,7 @@ import "ew-utils-general-contracts/contracts/Msc/Owned.sol";
 /// @title The database contract for the users, traders and admins of the certificate of origin
 /// @notice This contract only provides getter and setter methods that are only callable by the corresponging owner-contract
 contract UserDB is Owned {
-    
+
     struct User {
         string organization;
         uint roles;
@@ -29,7 +30,7 @@ contract UserDB is Owned {
     }
 
     /// @notice mapping for addresses to users
-    mapping(address => User) private userList;  
+    mapping(address => User) private userList;
 
     /// @notice modifier to check whether a user is already set in the state
     modifier userExists(address _user) {
@@ -46,11 +47,11 @@ contract UserDB is Owned {
     /// @param _user ethereum-address of an user
     /// @param _organization new name of the organization
     function setOrganization(
-        address _user, 
+        address _user,
         string calldata _organization
-    ) 
-        external 
-        onlyOwner 
+    )
+        external
+        onlyOwner
         userExists(_user)
     {
         User storage u = userList[_user];
@@ -63,17 +64,17 @@ contract UserDB is Owned {
     /// @param _user address of the user
     /// @param _organization organization the user is representing
     function setUser(
-        address _user, 
+        address _user,
         string calldata _organization
-    ) 
-        external 
-        onlyOwner 
+    )
+        external
+        onlyOwner
     {
         User storage u = userList[_user];
         u.organization = _organization;
         u.active = true;
     }
- 
+
     /// @notice function to (de-)active a user, dan only be used when the user already exists
     /// @dev the onlyOwner-modifier is used, so that only the logic-contract is allowed to write into the storage
     /// @param _user ethereum-address of an user
@@ -90,7 +91,7 @@ contract UserDB is Owned {
     function setRoles(address _user, uint _roles) external onlyOwner {
         User storage u = userList[_user];
         u.roles = _roles;
-    } 
+    }
 
     /// @notice function to return all the data of an user
     /// @dev the onlyOwner-modifier is used, so that only the logic-contract is allowed to read directly from the contract
@@ -99,11 +100,11 @@ contract UserDB is Owned {
     function getFullUser(address _user)
         onlyOwner
         external
-        view 
+        view
         returns (
           User memory user
         )
     {
         return userList[_user];
-    }  
+    }
 }
