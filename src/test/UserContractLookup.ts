@@ -1,6 +1,6 @@
 // Copyright 2018 Energy Web Foundation
 // This file is part of the Origin Application brought to you by the Energy Web Foundation,
-// a global non-profit organization focused on accelerating blockchain technology across the energy sector, 
+// a global non-profit organization focused on accelerating blockchain technology across the energy sector,
 // incorporated in Zug, Switzerland.
 //
 // The Origin Application is free software: you can redistribute it and/or modify
@@ -12,12 +12,12 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details, at <http://www.gnu.org/licenses/>.
 //
-// @authors: slock.it GmbH, Martin Kuechler, martin.kuechler@slock.it
+// @authors: slock.it GmbH; Martin Kuechler, martin.kuchler@slock.it; Heiko Burkhardt, heiko.burkhardt@slock.it
 
 import { assert } from 'chai';
 import * as fs from 'fs';
 import 'mocha';
-import Web3 = require('web3');
+import Web3 from 'web3';
 import { migrateUserRegistryContracts } from '../utils/migrateContracts';
 import { UserContractLookup } from '../wrappedContracts/UserContractLookup';
 import { UserLogic } from '../wrappedContracts/UserLogic';
@@ -29,7 +29,7 @@ describe('UserContractLookup', () => {
     const configFile = JSON.parse(fs.readFileSync(process.cwd() + '/connection-config.json', 'utf8'));
     // const configFile = JSON.parse(fs.readFileSync('connection-config.json', 'utf8'));
 
-   
+
     const web3: Web3 = new Web3(configFile.develop.web3);
 
     let userContractLookup: UserContractLookup;

@@ -1,6 +1,6 @@
 // Copyright 2018 Energy Web Foundation
 // This file is part of the Origin Application brought to you by the Energy Web Foundation,
-// a global non-profit organization focused on accelerating blockchain technology across the energy sector, 
+// a global non-profit organization focused on accelerating blockchain technology across the energy sector,
 // incorporated in Zug, Switzerland.
 //
 // The Origin Application is free software: you can redistribute it and/or modify
@@ -12,13 +12,14 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details, at <http://www.gnu.org/licenses/>.
 //
-// @authors: slock.it GmbH, Martin Kuechler, martin.kuchler@slock.it
+// @authors: slock.it GmbH; Martin Kuechler, martin.kuchler@slock.it; Heiko Burkhardt, heiko.burkhardt@slock.it
+
 
 pragma solidity ^0.5.0;
 
 /// @title this interface defines functions for defining functions of the user-logic in order to call them in different contracts
 interface RolesInterface {
-   
+
     /// @notice function to retrieve the rights of an user
     /// @dev if the user does not exist in the mapping it will return 0x0 thus preventing them from accidently getting any rights
     /// @param _user user someone wants to know its rights
