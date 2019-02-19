@@ -20,7 +20,7 @@ import UserDBJSON from '../../contract-build/UserDB.json';
 import UserLogicJSON from '../../contract-build/UserLogic.json';
 import { UserContractLookupJSON } from '..';
 
-import { deploy } from 'ew-deployment';
+import { deploy } from 'ew-utils-deployment';
 
 export async function migrateUserRegistryContracts(web3: Web3, deployKey: string): Promise<JSON> {
     return new Promise<any>(async (resolve, reject) => {
